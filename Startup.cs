@@ -21,6 +21,8 @@ namespace PdfApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(o => o.InputFormatters.Add(new TextHtmlInputFormatter()));
+
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,9 +33,9 @@ namespace PdfApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+
+            app.UseHealthChecks("/health");
 
             app.UseMiddleware<ApiKeyMiddleware>();
 
