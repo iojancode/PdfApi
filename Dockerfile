@@ -9,10 +9,10 @@ RUN apt-get update \
     && apt-get -y install curl \
     && rm -rf /var/lib/apt/lists/* 
 
-COPY bin/Release/netcoreapp3.1/publish /pdfapi
+COPY bin/Release/netcoreapp3.1/publish start.sh health.sh /pdfapi
 
 WORKDIR /pdfapi
 RUN dotnet PdfApi.dll --initBrowser
 
-ENTRYPOINT dotnet PdfApi.dll --urls "http://0.0.0.0:$PORT"
-HEALTHCHECK CMD curl --fail -s "http://localhost:$PORT/health" || exit 
+ENTRYPOINT [ "./start.sh" ]
+HEALTHCHECK CMD [ "./health.sh" ]
