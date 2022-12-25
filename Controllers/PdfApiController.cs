@@ -21,9 +21,6 @@ namespace PdfApi.Controllers
         [Consumes("text/html")]
         public async Task<IActionResult> FromHtml([FromBody] string body)
         {
-            using var browserFetcher = new BrowserFetcher();
-            await browserFetcher.DownloadAsync();
-
             await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
             await using var page = await browser.NewPageAsync();
             await page.SetContentAsync(body);
