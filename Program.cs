@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using PuppeteerSharp;
 
 namespace PdfApi
 {
@@ -16,8 +15,7 @@ namespace PdfApi
 
         public static void InitBrowser() 
         {
-            using var browserFetcher = new BrowserFetcher();
-            browserFetcher.DownloadAsync().GetAwaiter().GetResult();
+            PdfLogic.FromHtml("<body>init</body>").GetAwaiter().GetResult();
         } 
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
