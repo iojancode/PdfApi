@@ -6,7 +6,7 @@ dotnet publish -c Release -p:UseAppHost=false
 [ "$?" -ne "0" ] && exit 1
 
 # build docker image
-docker build --pull -t pdfapi:$tag -t pdfapi:latest -f Dockerfile .
+docker build --progress=plain --pull -t pdfapi:$tag -t pdfapi:latest -f Dockerfile .
 [ "$?" -ne "0" ] && exit 2
 
 # finish
