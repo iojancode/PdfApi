@@ -12,7 +12,8 @@ namespace PdfApi
             using var browserFetcher = new BrowserFetcher();
             await browserFetcher.DownloadAsync();
 
-            await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
+            await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { 
+                "--no-sandbox", "--disable-setuid-sandbox", "--font-render-hinting=none", "--force-color-profile=srgb" } });
             await using var page = await browser.NewPageAsync();
             await page.SetContentAsync(body);
             return await page.PdfStreamAsync(new PdfOptions { PrintBackground = true });
