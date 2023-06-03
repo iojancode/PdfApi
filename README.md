@@ -1,6 +1,6 @@
 # Pdf Api #
 
-Html to Pdf rendering API, implemented with PuppeteerSharp and Asp.Net Core
+Html to Pdf rendering API, implemented with PuppeteerSharp and Asp.Net Core. Built and published as `jmedinap/pdfapi:latest` image at [docker hub](https://hub.docker.com/repository/docker/jmedinap/pdfapi/general)
 
 ## Run
 
