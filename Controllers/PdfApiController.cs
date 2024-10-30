@@ -18,10 +18,12 @@ namespace PdfApi.Controllers
 
         [HttpPost]
         [Consumes("text/html")]
-        public async Task<IActionResult> FromHtml([FromBody] string body)
+        public async Task<IActionResult> FromHtml([FromBody] string body, [FromHeader(Name = "x-encrypt-pass")] string password)
         {
-            var stream = await PdfLogic.FromHtml(body);
-            _logger.LogInformation("fromHtml {hash}", body.GetHashCode());
+            if (string.IsNullOrWhiteSpace(body)) return BadRequest("Requires html body");
+
+            var stream = await PdfLogic.FromHtml(body, password);
+            _logger.LogInformation("fromHtml lenght={lenght}", body.Length);
 
             return File(stream, "application/pdf");
         }

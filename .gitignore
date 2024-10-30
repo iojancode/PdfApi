@@ -32,3 +32,6 @@ bld/
 
 # .NET core
 project.lock.json
+
+# chromium
+.local-chromium/
