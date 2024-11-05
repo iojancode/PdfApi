@@ -15,10 +15,11 @@ namespace PdfApi
             }
             inputPdf.Close();
 
+            string cryptPdfPath = Path.GetTempFileName();
             var processInfo = new ProcessStartInfo
             {
                 FileName = "qpdf",
-                Arguments = $"--encrypt {password} {password} 256 -- --replace-input {tempPdfPath}",
+                Arguments = $"--encrypt {password} {password} 256 -- {tempPdfPath} {cryptPdfPath}",
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
@@ -36,13 +37,14 @@ namespace PdfApi
                     if (process.ExitCode != 0) throw new Exception($"Error encrypting PDF: {errorOutput}");
                 }
 
-                var outputPdfStream = new MemoryStream(File.ReadAllBytes(tempPdfPath));
+                var outputPdfStream = new MemoryStream(File.ReadAllBytes(cryptPdfPath));
                 outputPdfStream.Position = 0;
                 return outputPdfStream;
             }
             finally 
             {
                 if (File.Exists(tempPdfPath)) File.Delete(tempPdfPath);
+                if (File.Exists(cryptPdfPath)) File.Delete(cryptPdfPath);
             }
         }
     }
