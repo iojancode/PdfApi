@@ -5,9 +5,9 @@ using PuppeteerSharp;
 
 namespace PdfApi
 {
-    public static class PdfLogic
+    static class PdfLogic
     {
-        public static async Task<Stream> FromHtml(string body)
+        public static async Task<Stream> FromHtml(string body, string password = null)
         {
             using var browserFetcher = new BrowserFetcher();
             await browserFetcher.DownloadAsync();
@@ -16,7 +16,10 @@ namespace PdfApi
                 "--no-sandbox", "--disable-setuid-sandbox", "--font-render-hinting=none", "--force-color-profile=srgb" } });
             await using var page = await browser.NewPageAsync();
             await page.SetContentAsync(body);
-            return await page.PdfStreamAsync(new PdfOptions { PrintBackground = true });
+            var result = await page.PdfStreamAsync(new PdfOptions { PrintBackground = true });
+
+            if (string.IsNullOrWhiteSpace(password)) return result;
+            else return EncryptLogic.EncryptPDFWithQPDF(result, password);
         }
     }
 }

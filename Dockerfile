@@ -7,7 +7,7 @@ RUN sed -i 's/$/ contrib/' /etc/apt/sources.list \
     && apt-get update \
     && apt-get -y install fonts-symbola fonts-ocr-b fonts-freefont-ttf ttf-mscorefonts-installer \
     && apt-get -y install xorg openbox libnss3 libasound2 \
-    && apt-get -y install curl \
+    && apt-get -y install curl qpdf \
     && rm -rf /var/lib/apt/lists/* 
 
 COPY bin/Release/netcoreapp3.1/publish start.sh /pdfapi
